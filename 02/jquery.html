@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>jquery.html</p>
+        <div id="divResult"></div>
+        <p>___________________</p>
+        <script language="JavaScript"> 
+        $(document).ready(() => {
+        $.ajax({url: "http://localhost:5000/api/name",
+                type: 'GET',
+                success: function(result){
+                    alert(result); 
+                    divResult.innerText = result;
+                }});
+            }); 
+        </script>
+    </body>
+</html>
