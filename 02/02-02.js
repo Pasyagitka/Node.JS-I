@@ -3,14 +3,13 @@ var fs = require('fs');
 
 http.createServer(function (request, response) {
     const picname = './pic.png';
-    let png = null;
 
     if(request.url === "/png"){
-        fs.stat(picname, (err,stat) => {
+        fs.stat(picname, (err, stat) => {
             if(err) { console.log('error:', err); }
             else {
-                png = fs.readFileSync(picname);
-                response.writeHead(200, {'Content-Type': 'image/png', 'Content-Length': stat.size});
+                let png = fs.readFileSync(picname);
+                response.writeHead(200, {'Content-Type': 'image/png'});
                 response.end(png, 'binary');
             }
         });

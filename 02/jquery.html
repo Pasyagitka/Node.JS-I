@@ -11,7 +11,7 @@
         <script language="JavaScript"> 
         $(document).ready(() => {
         $.ajax({url: "http://localhost:5000/api/name",
-                type: 'GET',
+                type: 'GET', async: true,
                 success: function(result){
                     alert(result); 
                     divResult.innerText = result;

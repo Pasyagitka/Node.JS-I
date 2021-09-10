@@ -11,7 +11,6 @@
             let req = new XMLHttpRequest();
             if (req) {
                 req.open("GET", "http://localhost:5000/api/name", true);
-                console.log('XMLHttpRequest', 1);
                 req.onreadystatechange = () => {
                     console.log('XMLHttpRequest', 2);
                     if (req.readyState == 4) {
@@ -19,9 +18,7 @@
                     }
                 }
                 req.onerror = function(e) {console.log('XMLHttpRequest.onerror', e);}
-                console.log('XMLHttpRequest', 3);
                 req.send();
-                console.log('XMLHttpRequest', 4);
             }
         </script>
     </body>

@@ -8,7 +8,7 @@
         <div id="divResult"></div>
         <p>___________________</p>
         <script language="JavaScript">  
-            fetch("http://localhost:5000/api/name")
+            fetch("http://localhost:5000/api/name", {method: 'GET'})
             .then(response => {return response.text();})
             .then((pdata) => {alert(pdata); divResult.innerText = pdata;})
         </script>
