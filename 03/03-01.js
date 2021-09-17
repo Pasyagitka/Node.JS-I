@@ -9,21 +9,21 @@ http.createServer(function(request, response) {
 process.stdin.setEncoding('utf-8');
 process.stdout.write(state + '->');
 
-//Событие испускается, когда есть данные, доступные для чтения из потока.
 process.stdin.on('readable', () => {
-  let chunk = null;
-  while ((chunk = process.stdin.read()) != null) 
+  let newstate = null;
+  while ((newstate = process.stdin.read()) != null) 
   {
-  	if (chunk.trim() === 'norm' || 
-        chunk.trim() === 'test' || 
-        chunk.trim() === 'stop' || 
-        chunk.trim() === 'idle') 
+    let trimmed = newstate.trim();
+  	if (trimmed === 'norm' || 
+        trimmed === 'test' || 
+        trimmed === 'stop' || 
+        trimmed === 'idle') 
     {
-      process.stdout.write('reg = ' + state + '--> ' + chunk.trim() +'\n');
-      state = chunk.trim();
+      process.stdout.write('reg = ' + state + '--> ' + trimmed +'\n');
+      state = trimmed;
       process.stdout.write(state + '->');
     }
-    else if (chunk.trim() === 'exit')   
+    else if (trimmed === 'exit')   
     { 	
       process.exit(0);    
     }

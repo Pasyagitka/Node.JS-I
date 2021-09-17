@@ -3,9 +3,9 @@ const url = require('url');
 const fs = require('fs');
 
 let fact = (n) => { return (n <= 1 ? n : n * fact(n-1));}
-//1070
-//666 473
-//2332 4576 4331
+//38
+//21 28
+//59 79 75
 
 http.createServer(function (request, response) 
 {
@@ -13,8 +13,8 @@ http.createServer(function (request, response)
     if (urlpath.pathname === '/fact') 
     {
         if (urlpath.query.k !== null) 
-        {
-            let k = parseInt(urlpath.query.k);
+        {   
+            let k = Number(urlpath.query.k);
             if (Number.isInteger(k)) 
             {
                 response.writeHead(200, { 'Content-Type': 'application/json' });

@@ -3,16 +3,15 @@ const fs = require('fs');
 const url = require('url');
 
 let fact = (n) => { return (n <= 1 ? n : n * fact(n-1));}
-//851 
-//571 396
-//1788 2671 1196
+//27
+//25 26
+//76 78 62
 
 //инструкция по созданию объекта
 function Fact(n, cb) {
     this.ffact = fact;
     this.num = n;
     this.cb = cb;
-
     this.calc = ()=> {
         process.nextTick( () => {
             this.cb(null, this.ffact(this.num));
@@ -27,14 +26,13 @@ http.createServer(function (request, response)
     {
         if (urlpath.query.k !== null) 
         {
-            let k = parseInt(urlpath.query.k);
+            let k = Number(urlpath.query.k);
             if (Number.isInteger(k)) 
             {
                 response.writeHead(200, {'Content-Type' : 'application/json'});
                 let fact = new Fact(k, (error, result) => {
                     response.end(JSON.stringify({ k: k , fact: result }));
-                });
-                fact.calc();
+                }).calc();
             }
         }
     }
