@@ -7,7 +7,6 @@ let fact = (n) => { return (n <= 1 ? n : n * fact(n-1));}
 //25 26
 //76 78 62
 
-//инструкция по созданию объекта
 function Fact(n, cb) {
     this.ffact = fact;
     this.num = n;
