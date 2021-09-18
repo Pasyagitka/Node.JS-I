@@ -9,6 +9,14 @@ let dbData = [
 	{id: 4, name: 'Rrrrrrr.', bday: '2001-01-05'}
 ];
 
+class Person{
+    constructor(){
+        this.id = -1;
+        this.name="Anonymous";
+        this.bday="0000-00-00";
+    }
+}
+
 function DB() {
 	this.getIndex = () => { return dbData.length; };
     this.select = () => { return dbData; };
@@ -38,3 +46,4 @@ function DB() {
 }
 util.inherits(DB, events.EventEmitter);
 exports.DB = DB;
+module.exports.Person = Person;

@@ -1,5 +1,6 @@
 const http = require('http');
 const url = require('url');
+const fs = require('fs');
 
 let data = require('./DB.js');
 let db = new data.DB();
@@ -33,7 +34,7 @@ db.on('PUT', async (request, response) => {
         newHuman = JSON.parse(data);
     });
     request.on('end', () => {
-        console.log(newHuman);
+        console.log('newHuman', newHuman);
         response.end(JSON.stringify(db.update(newHuman)));
     })
 });
@@ -48,5 +49,9 @@ db.on('DELETE', async (request, response) => {
 http.createServer(function (request, response) {
 	if(url.parse(request.url).pathname === '/api/db') {
         db.emit(request.method, request, response);
+    }
+    if(url.parse(request.url).pathname === '/') {
+        response.writeHead(200, {'Content-Type' : 'text/html; charset=utf-8'});
+        response.end(fs.readFileSync('./04-02.html'));
     }
 }).listen(5000);

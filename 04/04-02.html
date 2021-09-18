@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>04-02.html</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+    <br/>
+    <div class="container">
+        <div class="row">
+        <div class="col">
+            <button onclick="Get()" type="button" class="btn btn-light">Получить данные</button><br/><br/>
+            <div class="font-weight-normal" id="result"></div>
+        </div>
+        <div class="col">
+            <h2>INSERT</h2>
+            <form>
+                <div class="form-group">
+                <label for="iName">Name</label>
+                <input type="text" class="form-control" id="iName">
+                </div>
+                <div class="form-group">
+                <label for="iBday">Date of birth</label>
+                <input type="text" class="form-control" id="iBday">
+                </div>
+                <button onclick="Post()" class="btn btn-primary">Insert</button>
+            </form>
+        </div>
+        <div class="w-500"></div>
+        <div class="col">
+            <h2>UPDATE</h2>
+            <form>
+                <div class="form-group">
+                    <label for="uId">Id</label>
+                    <input type="number" class="form-control" id="uId">
+                </div>
+                <div class="form-group">
+                <label for="uName">Name</label>
+                <input type="text" class="form-control" id="uName">
+                </div>
+                <div class="form-group">
+                <label for="uBday">Date of birth</label>
+                <input type="text" class="form-control" id="uBday">
+                </div>
+                <button onclick="Put()" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+       <div class="col">
+            <h2>DELETE</h2>
+            <form>
+                <div class="form-group">
+                    <label for="dId">Id</label>
+                    <input type="number" class="form-control" id="dId">
+                </div>
+                <button onclick="Delete()" class="btn btn-primary">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+	<script type="text/javascript">
+        function Get() {
+            fetch('http://localhost:5000/api/db', {method: 'GET'})
+            .then(response => { return response.json(); })
+            .then(pdata => {
+                let get = document.getElementById("result");
+                get.innerHTML = '';
+                pdata.forEach(element => {get.innerHTML += (element.id + '.  ' + element.name + ' ' + element.bday + '<br/>');
+                });
+            });
+        }
+        function Post() {
+            let Name = document.getElementById("iName").value;
+            let BDay = document.getElementById("iBday").value;
+            let formdata = JSON.stringify({name: Name, bday: BDay});
+            if (formdata) {
+                fetch('http://localhost:5000/api/db', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: formdata})
+                .then(response => { return response.json(); })
+                .then(pdata => { console.log('POST ', pdata);});
+            }
+            else {
+                let get = document.getElementById("result");
+                get.innerHTML = 'error';
+            }
+        }
+        function Put() {
+            let Name = document.getElementById("uName").value;
+            let BDay = document.getElementById("uBday").value;
+            let Id = document.getElementById('uId').value;
+            let formdata = JSON.stringify({id: Number(Id), name: Name, bday: BDay});
+            if (formdata) {
+                fetch('http://localhost:5000/api/db', { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: formdata})
+                .then(response => { return response.json(); })
+                .then(pdata => {console.log('PUT.pdata', pdata); });
+            }
+            else {
+                let get = document.getElementById("result");
+                get.innerHTML = 'error';
+            }
+        }
+        function Delete() {
+            let Id = document.getElementById("dId");
+            if (Id.value) {
+                fetch(`http://localhost:5000/api/db?id=${Id.value}`, {method: 'DELETE'})
+                .then(response => { return response.json(); })
+                .then(pdata => {console.log('DELETE.pdata', pdata);});
+            }
+            else {
+                let get = document.getElementById("result");
+                get.innerHTML = 'error';
+            }
+        }
+    </script>
+</html>
