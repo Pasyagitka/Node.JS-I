@@ -36,7 +36,7 @@ function DB() {
 			return row;
         }
         else {
-	    	return JSON.parse('{"error": "no index"}');
+	    	return JSON.parse('{"Ошибка": "неверный индекс"}');
 		}
     };
     this.delete = id => {
@@ -48,7 +48,7 @@ function DB() {
 			return deleted;
 	    }
 	    else {
-	    	return JSON.parse('{"error": "no index"}');
+	    	return JSON.parse('{"Ошибка": "неверный индекс"}');
 		}
     };
 	this.commit =() => {

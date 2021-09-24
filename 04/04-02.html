@@ -54,7 +54,7 @@
                     <label for="dId">Id</label>
                     <input type="number" class="form-control" id="dId">
                 </div>
-                <button onclick="Delete()" class="btn btn-success">Delete</button>
+                <button onclick="Delete()"  class="btn btn-success">Delete</button>
             </form>
         </div>
     </div>
@@ -77,12 +77,11 @@
             let formdata = JSON.stringify({name: Name, bday: BDay});
             if (formdata) {
                 fetch('http://localhost:5000/api/db', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: formdata})
-                .then(response => { return response.json(); })
-                .then(pdata => { console.log('POST ', pdata);});
+                .then(response => {  return response.json(); })
             }
             else {
                 let get = document.getElementById("result");
-                get.innerHTML = 'error';
+                get.innerHTML = 'Ошибка...';
             }
         }
         function Put() {
@@ -93,11 +92,10 @@
             if (formdata) {
                 fetch('http://localhost:5000/api/db', { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: formdata})
                 .then(response => { return response.json(); })
-                .then(pdata => {console.log('PUT.pdata', pdata); });
             }
             else {
                 let get = document.getElementById("result");
-                get.innerHTML = 'error';
+                get.innerHTML = 'Ошибка...';
             }
         }
         function Delete() {
@@ -105,11 +103,10 @@
             if (Id.value) {
                 fetch(`http://localhost:5000/api/db?id=${Id.value}`, {method: 'DELETE'})
                 .then(response => { return response.json(); })
-                .then(pdata => {console.log('DELETE.pdata', pdata);});
             }
             else {
                 let get = document.getElementById("result");
-                get.innerHTML = 'error';
+                get.innerHTML = 'Ошибка...';
             }
         }
     </script>

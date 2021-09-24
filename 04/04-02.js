@@ -39,7 +39,8 @@ db.on('PUT', async (request, response) => {
     })
 });
 
-db.on('DELETE', async (request, response) => {
+db.on('DELETE', async (request,
+     response) => {
 	console.log('DELETE');
 	let id = +url.parse(request.url, true).query.id;
     response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
