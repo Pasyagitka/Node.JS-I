@@ -1,38 +1,32 @@
 let fs = require('fs');
+let http = require('http');
 
-class Stat
+function Stat(rootDirectory)
 {
-    constructor(rootFolder)
-    {
-        this.rootFolder = rootFolder;
+    let pathStatic = (fn) => { return `${rootDirectory}${fn}`;}
+
+    this.writeHTTP404 = (response) =>  {
+        response.writeHead(404, {'Content-Type':'application/json; charset=utf-8'});
+        response.end("404 Not Found");
     }
 
-    getFullFileName(relativeFileName)
-    {
-        return this.rootFolder + relativeFileName;
+    this.writeHTTP405 = (response) =>  {
+        response.writeHead(405, {'Content-Type':'application/json; charset=utf-8'});
+        response.end("405 Method Not Allowed");
     }
 
-    writeHTTP404 (response)
-    {
-        response.statusCode = 404;
-        response.statusMessage = 'Resourse not found';
-        response.end("HTTP ERROR 404: Resourse not found");
-    }
-
-    pipeFile(request, response, headers)
-    {
+    this.pipeFile  = (request, response, headers) =>  {
         response.writeHead(200, headers);
-        fs.createReadStream(this.getFullFileName(request.url)).pipe(response);
+        fs.createReadStream(pathStatic(request.url)).pipe(response);
     }
 
-    sendFile(request, response, headers)
-    {
-        console.log(this.getFullFileName(request.url));
-        fs.access(this.getFullFileName(request.url), fs.constants.R_OK, err =>
-        {
+    this.isStatic = (ext, fn) => {let reg = new RegExp(`^\/.+\.${ext}$`); return reg.test(fn);}
+
+    this.sendFile = (request, response, headers) =>  {
+        fs.access(pathStatic(request.url), fs.constants.R_OK, err => {
             if(err) this.writeHTTP404(response);
             else this.pipeFile(request, response, headers);
         });
     }
 }
-module.exports = (rootFolder) => {return new Stat(rootFolder);}
+module.exports = (parm) => {return new Stat(parm);}
