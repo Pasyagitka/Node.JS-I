@@ -12,7 +12,7 @@ let server = http.createServer(function (request, response) {
 
     if (request.method == 'GET')
     {
-        if (requestUrl == '/connection'){ //;todo chto eto?
+        if (requestUrl == '/connection'){
             if(!url.parse(request.url, true).query.set) {
                 response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
                 response.end(`KeepAliveTimeout: ${server.keepAliveTimeout}`);
@@ -137,7 +137,6 @@ let server = http.createServer(function (request, response) {
                     if (err) {
                         response.writeHead(400, {'Content-Type': 'application/xml; charset=utf-8'});
                         response.end('Ошибка разбора XML');
-
                     } 
                     else {
                         response.writeHead(200, {'Content-Type': 'application/xml; charset=utf-8'});
@@ -145,7 +144,6 @@ let server = http.createServer(function (request, response) {
                         let id = result.request.$.id;
                         let xmlDoc = xmlbuilder.create('response');
                         xmlDoc.att('id', id);
-
 
                         let xSum = 0;
                         let mConcat = '';
