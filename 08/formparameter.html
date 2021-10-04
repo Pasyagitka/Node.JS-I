@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>formparameter</title>
+</head>
+<body>
+    <form method="POST" action="http://localhost:5000/formparameter">
+        <input type="text" name="text" value="text"/>
+        <input type="number" name="number" value="2"/>
+        <input type="date" name="date" value="2021-10-06"/>
+        <input type="checkbox" name="checkbox" value="first" checked=true/>
+        <input type="checkbox" name="checkbox" value="second" checked=true/>
+        <input type="radio" name="radio" value="first" checked=true/>
+        <input type="radio" name="radio" value="second" checked=true/>
+        <textarea name="textarea">textarea</textarea>
+        <input type="submit" name="submit" value="first"/>
+        <input type="submit" name="submit" value="second"/>
+    </form>
+</body>
+</html>
