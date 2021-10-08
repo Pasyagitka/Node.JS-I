@@ -6,6 +6,7 @@ const xmlbuilder = require('xmlbuilder');
 const parseString = require('xml2js').parseString;
 
 let staticPath = './static';
+
 let server = http.createServer(function (request, response) {
 
     let requestUrl = url.parse(request.url, true).pathname;
@@ -47,7 +48,7 @@ let server = http.createServer(function (request, response) {
             }
             else response.end(`URI: ${request.url}`);
         }
-        else if (requestUrl == '/close'){ //остановится когда запросы закончатся?
+        else if (requestUrl == '/close'){
             response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8 '});
             response.end(`Сервер остановится через 10 секунд`);
             sd_timer = setTimeout( () =>  { server.close(); console.log('Сервер остановлен'); }, 10*1000);
@@ -56,18 +57,18 @@ let server = http.createServer(function (request, response) {
             response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8 '});
             response.end(`Клиент: IP-адрес ${request.socket.localAddress}, порт ${request.socket.localPort}; Сервер: IP-адрес ${request.socket.remoteAddress}, порт ${request.socket.remotePort}`);
         }
-        else if (requestUrl == '/req-data'){ //???????????????
+        else if (requestUrl == '/req-data'){
             console.log('req-data');
             response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
-            request.on('data', chunk =>  {  console.log(`data: \n ${chunk} \n`);});
+            request.on('data', chunk =>  {  console.log(`data:`);});
             request.on('end', () => { console.log('end'); });
             response.end();
         }
         else if (requestUrl == '/resp-status'){
-            response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+            response.setHeader('Content-Type', 'text/html; charset=utf-8');
             response.statusCode = parseInt(url.parse(request.url, true).query.code);
             response.statusMessage = url.parse(request.url, true).query.mess;
-            response.end(`Статус: ${response.statusCode}, сообщение: ${response.statusMessage}`);
+            response.end();
         }
         else if (requestUrl == '/formparameter'){
             response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
@@ -129,37 +130,38 @@ let server = http.createServer(function (request, response) {
                 response.end(JSON.stringify(jsonResponse));
             });
         }
+    
         else if (requestUrl == '/xml') {
             let data ='';
             request.on('data', (chunk) => { data += chunk; });
             request.on('end', () => {
-                parseString(data, function(err, result) {
-                    if (err) {
-                        response.writeHead(400, {'Content-Type': 'application/xml; charset=utf-8'});
-                        response.end('Ошибка разбора XML');
-                    } 
-                    else {
-                        response.writeHead(200, {'Content-Type': 'application/xml; charset=utf-8'});
-                        
-                        let id = result.request.$.id;
-                        let xmlDoc = xmlbuilder.create('response');
-                        xmlDoc.att('id', id);
+            parseString(data, function(err, result) {
+                if (err) {
+                    response.writeHead(400, {'Content-Type': 'text/xml; charset=utf-8'});
+                    response.end('Ошибка разбора XML');
+                } 
+                else {
+                    response.writeHead(200, {'Content-Type': 'text/xml; charset=utf-8'});
+                    
+                    let id = result.request.$.id;
+                    let xmlDoc = xmlbuilder.create('response');
+                    xmlDoc.att('id', id);
 
-                        let xSum = 0;
-                        let mConcat = '';
-                        result.request.x.forEach((p) => { xSum += parseInt(p.$.value); });
-                        result.request.m.forEach((p) => { mConcat += p.$.value; });
-                       
-                        xmlDoc.ele('sum').att('element', 'x').att('result', xSum).up()
-                              .ele('concat').att('element', 'm').att('result', mConcat).up();
-                        response.end(xmlDoc.toString());
-                    }
+                    let xSum = 0;
+                    let mConcat = '';
+                    result.request.x.forEach((p) => { xSum += parseInt(p.$.value); });
+                    result.request.m.forEach((p) => { mConcat += p.$.value; });
+                    
+                    xmlDoc.ele('sum').att('element', 'x').att('result', xSum).up()
+                            .ele('concat').att('element', 'm').att('result', mConcat).up();
+                    response.end(xmlDoc.toString({pretty:true}));
+                }
                 });
             });
         }
         else if (requestUrl == '/upload') {
             let form = new mp.Form({uploadDir: staticPath});
-            form.on('file', (name, file) => { });
+            form.on('file', (name, file) => { console.log(name); });
             form.on('error', (err)=>{response.end('Ошибка! Файл не сохранен')});
             form.on('close', () => {
                 response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
@@ -174,3 +176,5 @@ let server = http.createServer(function (request, response) {
         }
     }
 }).listen(5000);
+
+server.on('connection', function(){ console.log('New connection');});
