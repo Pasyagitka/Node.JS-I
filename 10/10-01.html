@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>10-01</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <br>
+            <h1>10-01</h1>
+            <input type="button" value="startWS" onclick="startWS()" class="btn btn-success text-white"></button>
+            <div id='log' width="500"></div>
+        </div>
+    <script>
+        function startWS() {
+            alert('StartWS');
+            let log =  document.getElementById('log');
+            let n = 0;
+            let client = new WebSocket('ws://localhost:4000');
+
+            client.onopen = () => {
+                log.innerText+='Клиент подключен к серверу\n';
+                let timer = setInterval(() => {client.send(`10-01-client: ${++n}`); log.innerText+= `На сервер отправлено сообщение, n=${n}\n`;}, 3*1000);
+                setTimeout(() => {log.innerText+='25 секунд прошло. Клиент отключается\n'; clearInterval(timer);  client.close()}, 25*1000);
+            };
+            client.onmessage = (message) =>{
+                log.innerText+=`Сообщение от сервера: ${message.data}\n`;
+            };
+        }
+    </script>
+    </body>
+</html>
