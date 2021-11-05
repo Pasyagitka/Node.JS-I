@@ -12,7 +12,7 @@ client.on('open', () => {
     client.call('mul', [3, 5, 7, 9, 11, 13]).then((result)=>{console.log(`Произведение переданных параметров = ${result}`);});
 
 
-    client.login({username: 'liza', password: 'liza'}).then(() => {
+    client.login({key: 'liza'}).then(() => {
         client.call('fib', 1).then((result)=>{console.log(`Массив, содержащий 1 элемент последовательности Фибоначчи: ${result}`);});
         client.call('fib', 2).then((result)=>{console.log(`Массив, содержащий 2 элемента последовательности Фибоначчи: ${result}`);});
         client.call('fib', 7).then((result)=>{console.log(`Массив, содержащий 7 элементов последовательности Фибоначчи: ${result}`);});

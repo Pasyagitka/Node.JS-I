@@ -1,6 +1,6 @@
 const WebSocketServer = require('rpc-websockets').Server;
 const server = new WebSocketServer({port: 4000, host: 'localhost'});
-server.setAuth(credentials => credentials.username === 'liza' && credentials.password === 'liza');
+server.setAuth(credentials => credentials.key === 'liza');
 
 server.register('square', (parameters) => {
     switch(parameters.length) {
