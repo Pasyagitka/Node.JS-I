@@ -3,8 +3,8 @@ const net = require('net');
 let HOST = '127.0.0.1';
 let PORT = 2000;
 
-let sum = 0;
 net.createServer((sock) => {
+    let sum = 0;
     console.log('Server: ' + sock.remoteAddress + ':' + sock.remotePort);
 
     sock.on('data', (data) => {

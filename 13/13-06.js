@@ -8,13 +8,14 @@ let buf = new Buffer.alloc(4);
 let timerId = null;
 client.connect(PORT, HOST, ()=> {
     console.log('Client CONNECTED: ', client.remoteAddress + ' ' + client.remotePort);
+    let x = process.argv[2];
     let k = 0;
     timerId = setInterval(() => {
-        console.log(`Client sending number: ${++k}`);
-        client.write((buf.writeInt32LE(k, 0), buf));
+        console.log(`Client sending X=${x} (№${++k})`);
+        client.write((buf.writeInt32LE(x, 0), buf));
     }, 1*1000);
     setTimeout(() => {clearInterval(timerId); client.end();}, 20*1000);
-})
+});
 
 client.on('data', (data)=> {console.log('Client received: ', data.readInt32LE()); });
 client.on('close', ()=> {console.log('Closing client...');});

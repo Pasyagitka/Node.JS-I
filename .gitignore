@@ -8,3 +8,7 @@
 13/cpp/ServerT.obj
 **/node_modules/
 **/package-lock.json
+13/cpp/ClientU.exe
+13/cpp/ServerU.exe
+13/cpp/ClientU.obj
+13/cpp/ServerU.obj

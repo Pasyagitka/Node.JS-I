@@ -8,7 +8,7 @@ client.connect(PORT, HOST, ()=> {
     console.log('Client CONNECTED: ', client.remoteAddress + ' ' + client.remotePort);
 })
 
-client.write('Message from client...!');
+client.write('Message from client...\0');
 client.on('data', (data)=> {console.log('Client received: ', data.toString()); client.destroy();});
 
 client.on('close', ()=> {console.log('Closing client...');});
