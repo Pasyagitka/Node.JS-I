@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>14</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container"></br>        
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <h2>GET api/pulpits</h2>
+                <button onclick="Get()" type="button" class="btn btn-success">GET</button><br/><br/>
+            </div>
+            <div class="col">
+                <h2>POST api/pulpits</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="iPulpit">PULPIT</label>
+                        <input type="text" class="form-control" id="iPulpit">
+                    </div>
+                        <div class="form-group">
+                        <label for="iPulpitName">PULPIT_NAME</label>
+                        <input type="text" class="form-control" id="iPulpitName">
+                    </div>
+                    <div class="form-group">
+                        <label for="iFaculty">FACULTY</label>
+                        <input type="text" class="form-control" id="iFaculty">
+                    </div>
+                    <button onclick="Post()" type="button"  class="btn btn-success">POST</button>
+                </form>
+            </div>
+            <div class="w-500"></div>
+            <div class="col">
+                <h2>PUT api/pulpits</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="uPulpit">PULPIT</label>
+                        <input type="text" class="form-control" id="uPulpit">
+                    </div>
+                        <div class="form-group">
+                        <label for="uPulpitName">PULPIT_NAME</label>
+                        <input type="text" class="form-control" id="uPulpitName">
+                    </div>
+                    <div class="form-group">
+                        <label for="uFaculty">FACULTY</label>
+                        <input type="text" class="form-control" id="uFaculty">
+                    </div>
+                    <button onclick="Put()" type="button" class="btn btn-success">PUT</button>
+                </form>
+            </div>
+           <div class="col">
+                <h2>DELETE api/pulpits/xyz</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="dId">Id</label>
+                        <input type="text" class="form-control" id="dId">
+                    </div>
+                    <button onclick="Delete()"  type="button"  class="btn btn-success">DELETE</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+    <div class="container" width="900">
+        <div id="result">Result</div>
+    </div>
+  
+</body>
+    <script type="text/javascript">
+        function Get() {
+            fetch('http://localhost:3000/api/pulpits', {method: 'GET'})
+            .then(response => { return response.json(); })
+            .then(pdata => {
+                let get = document.getElementById("result");
+                get.innerHTML = '';
+                pdata.forEach(element => {get.innerHTML += (element.pulpit_name + '<br/>');  });
+            });
+        }
+        function Post() {
+            let Pulpit = document.getElementById("iPulpit").value;
+            let PulpitName = document.getElementById("iPulpitName").value;
+            let Faculty = document.getElementById("iFaculty").value;
+            let formdata = JSON.stringify({pulpit: Pulpit, pulpit_name: PulpitName, faculty: Faculty});
+  
+            fetch('http://localhost:3000/api/pulpits', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: formdata})
+            .then(response => { return response.json();})
+            .then(pdata => { document.getElementById("result").innerHTML = JSON.stringify(pdata); }).catch(error => {
+                console.log('error', error);
+            });
+        }
+        function Put() {
+            let Pulpit = document.getElementById("uPulpit").value;
+            let PulpitName = document.getElementById("uPulpitName").value;
+            let Faculty = document.getElementById("uFaculty").value;
+            let formdata = JSON.stringify({pulpit: Pulpit, pulpit_name: PulpitName, faculty: Faculty});
+           
+            fetch('http://localhost:3000/api/pulpits', { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: formdata})
+            .then(response => { return response.json(); })
+            .then(pdata => { document.getElementById("result").innerHTML = JSON.stringify(pdata); });
+        }
+        function Delete() {//вернуть удаленные
+            let Id = document.getElementById("dId");
+            fetch(`http://localhost:3000/api/pulpits/${Id.value}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}})
+            .then(response => {  return response.json(); })
+            .then(pdata => {  document.getElementById("result").innerHTML = JSON.stringify(pdata); })
+        }
+    </script>
+</html>

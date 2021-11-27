@@ -1,286 +1,144 @@
--- DROP TABLE FACULTY
-CREATE TABLE FACULTY
-  (
-   FACULTY      CHAR(10)      NOT NULL,
-   FACULTY_NAME VARCHAR2(50), 
-   CONSTRAINT PK_FACULTY PRIMARY KEY(FACULTY) 
-  );
-     
-delete FACULTY;
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-             values  ('ИДиП',   'Издателькое дело и полиграфия');
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-            values  ('ХТиТ',   'Химическая технология и техника');
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-            values  ('ЛХФ',     'Лесохозяйственный факультет');
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-            values  ('ИЭФ',     'Инженерно-экономический факультет');
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-            values  ('ТТЛП',    'Технология и техника лесной промышленности');
-insert into FACULTY   (FACULTY,   FACULTY_NAME )
-            values  ('ТОВ',     'Технология органических веществ');
+п»їcreate database [Node.js14];
+go
 
---------------------------------------------------------------------------------------------
--- DROP TABLE PULPIT
-CREATE TABLE PULPIT 
-(
- PULPIT       CHAR(10)      NOT NULL,
- PULPIT_NAME  VARCHAR2(100), 
- FACULTY      CHAR(10)      NOT NULL, 
- CONSTRAINT FK_PULPIT_FACULTY FOREIGN KEY(FACULTY)   REFERENCES FACULTY(FACULTY), 
- CONSTRAINT PK_PULPIT PRIMARY KEY(PULPIT) 
- ); 
- 
-delete PULPIT;  
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY )
-             values  ('ИСиТ',    'Иформационный систем и технологий ',                         'ИДиП'  );
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY )
-             values  ('ПОиСОИ', 'Полиграфического оборудования и систем обработки информации ', 'ИДиП'  );
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-              values  ('ЛВ',      'Лесоводства',                                                 'ЛХФ') ;         
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ОВ',      'Охотоведения',                                                 'ЛХФ') ;   
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ЛУ',      'Лесоустройства',                                              'ЛХФ');           
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ЛЗиДВ',   'Лесозащиты и древесиноведения',                               'ЛХФ');                
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ЛПиСПС',  'Ландшафтного проектирования и садово-паркового строительства','ЛХФ');                  
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ТЛ',     'Транспорта леса',                                              'ТТЛП');                        
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ЛМиЛЗ',  'Лесных машин и технологии лесозаготовок',                      'ТТЛП');                        
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                   FACULTY)
-             values  ('ОХ',     'Органической химии',                                           'ТОВ');            
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                              FACULTY)
-             values  ('ТНХСиППМ','Технологии нефтехимического синтеза и переработки полимерных материалов','ТОВ');             
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                      FACULTY)
-             values  ('ТНВиОХТ','Технологии неорганических веществ и общей химической технологии ','ХТиТ');                    
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                                         FACULTY)
-             values  ('ХТЭПиМЭЕ','Химии, технологии электрохимических производств и материалов электронной техники', 'ХТиТ');
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                      FACULTY)
-             values  ('ЭТиМ',    'экономической теории и маркетинга',                              'ИЭФ');   
-insert into PULPIT   (PULPIT,    PULPIT_NAME,                                                      FACULTY)
-             values  ('МиЭП',   'Менеджмента и экономики природопользования',                      'ИЭФ');    
-------------------------------------------------------------------------------------------------------------------------        - DROP  TABLE TEACHER
-CREATE TABLE TEACHER
- ( 
-  TEACHER       CHAR(10) NOT  NULL,
-  TEACHER_NAME  VARCHAR2(50), 
-  PULPIT        CHAR(10) NOT NULL, 
-  CONSTRAINT PK_TEACHER  PRIMARY KEY(TEACHER), 
-  CONSTRAINT FK_TEACHER_PULPIT FOREIGN   KEY(PULPIT)   REFERENCES PULPIT(PULPIT)
- ) ;
- 
- 
-delete  TEACHER;
-insert into  TEACHER    (TEACHER,   TEACHER_NAME, PULPIT )
-                       values  ('СМЛВ',    'Смелов Владимир Владиславович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('АКНВЧ',    'Акунович Станислав Иванович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('КЛСНВ',    'Колесников Леонид Валерьевич',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ГРМН',    'Герман Олег Витольдович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЛЩНК',    'Лащенко Анатолий Пвалович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('БРКВЧ',    'Бракович Андрей Игорьевич',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ДДК',     'Дедко Александр Аркадьевич',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('КБЛ',     'Кабайло Александр Серафимович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('УРБ',     'Урбанович Павел Павлович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('РМНК',     'Романенко Дмитрий Михайлович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ПСТВЛВ',  'Пустовалова Наталия Николаевна', 'ИСиТ' );
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('?',     'Неизвестный',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                      values  ('ГРН',     'Гурин Николай Иванович',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЖЛК',     'Жиляк Надежда Александровна',  'ИСиТ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('БРТШВЧ',   'Барташевич Святослав Александрович',  'ПОиСОИ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЮДНКВ',   'Юденков Виктор Степанович',  'ПОиСОИ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('БРНВСК',   'Барановский Станислав Иванович',  'ЭТиМ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('НВРВ',   'Неверов Александр Васильевич',  'МиЭП');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('РВКЧ',   'Ровкач Андрей Иванович',  'ОВ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ДМДК', 'Демидко Марина Николаевна',  'ЛПиСПС');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('МШКВСК',   'Машковский Владимир Петрович',  'ЛУ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЛБХ',   'Лабоха Константин Валентинович',  'ЛВ');
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЗВГЦВ',   'Звягинцев Вячеслав Борисович',  'ЛЗиДВ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('БЗБРДВ',   'Безбородов Владимир Степанович',  'ОХ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ПРКПЧК',   'Прокопчук Николай Романович',  'ТНХСиППМ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('НСКВЦ',   'Насковец Михаил Трофимович',  'ТЛ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('МХВ',   'Мохов Сергей Петрович',  'ЛМиЛЗ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЕЩНК',   'Ещенко Людмила Семеновна',  'ТНВиОХТ'); 
-insert into  TEACHER    (TEACHER,  TEACHER_NAME, PULPIT )
-                       values  ('ЖРСК',   'Жарский Иван Михайлович',  'ХТЭПиМЭЕ'); 
----------------------------------------------------------------------------------------------------------------------
--- DROP TABLE SUBJECT 
-CREATE TABLE SUBJECT
-    (
-     SUBJECT      CHAR(10)     NOT NULL, 
-     SUBJECT_NAME VARCHAR2(50)  NOT NULL,
-     PULPIT       CHAR(10)     NOT NULL,  
-     CONSTRAINT PK_SUBJECT PRIMARY KEY(SUBJECT),
-     CONSTRAINT FK_SUBJECT_PULPIT FOREIGN  KEY(PULPIT)  REFERENCES PULPIT(PULPIT)
-    );
+use [Node.js14];
+go
 
-delete SUBJECT;
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('СУБД',   'Системы управления базами данных',                   'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT)
-                       values ('БД',     'Базы данных',                                        'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ИНФ',    'Информацтонные технологии',                          'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ОАиП',  'Основы алгоритмизации и программирования',            'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ПЗ',     'Представление знаний в компьютерных системах',       'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ПСП',    'Пограммирование сетевых приложений',                 'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('МСОИ',     'Моделирование систем обработки информации',        'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ПИС',     'Проектирование информационных систем',              'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('КГ',      'Компьютерная геометрия ',                           'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ПМАПЛ',   'Полиграфические машины, автоматы и поточные линии', 'ПОиСОИ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('КМС',     'Компьютерные мультимедийные системы',               'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ОПП',     'Организация полиграфического производства',         'ПОиСОИ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,                            PULPIT)
-               values ('ДМ',   'Дискретная матеатика',                     'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,                             PULPIT )
-               values ('МП',   'Математисеское программирование',          'ИСиТ');  
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,                             PULPIT )
-               values ('ЛЭВМ', 'Логические основы ЭВМ',                     'ИСиТ');                   
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,                             PULPIT )
-               values ('ООП',  'Объектно-ориентированное программирование', 'ИСиТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ЭП',     'Экономика природопользования',                       'МиЭП');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ЭТ',     'Экономическая теория',                               'ЭТиМ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('БЛЗиПсOO','Биология лесных зверей и птиц с осн. охотов.',      'ОВ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ОСПиЛПХ','Основы садовопаркового и лесопаркового хозяйства',  'ЛПиСПС');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ИГ',     'Инженерная геодезия ',                              'ЛУ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ЛВ',    'Лесоводство',                                        'ЛЗиДВ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ОХ',    'Органическая химия',                                 'ОХ');   
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ТРИ',    'Технология резиновых изделий',                      'ТНХСиППМ'); 
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ВТЛ',    'Водный транспорт леса',                             'ТЛ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ТиОЛ',   'Технология и оборудование лесозаготовок',           'ЛМиЛЗ'); 
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ТОПИ',   'Технология обогащения полезных ископаемых ',        'ТНВиОХТ');
-insert into SUBJECT   (SUBJECT,   SUBJECT_NAME,        PULPIT )
-                       values ('ПЭХ',    'Прикладная электрохимия',                           'ХТЭПиМЭЕ');          
----------------------------------------------------------------------------------------------------------------------
--- DROP TABLE AUDITORIUM_TYPE 
-create table AUDITORIUM_TYPE 
-(
-  AUDITORIUM_TYPE   char(10) constraint AUDITORIUM_TYPE_PK  primary key,  
-  AUDITORIUM_TYPENAME  varchar2(30) constraint AUDITORIUM_TYPENAME_NOT_NULL not null         
+CREATE TABLE FACULTY (
+  FACULTY nvarchar(10) CONSTRAINT FACULTY_PK PRIMARY KEY,
+  FACULTY_NAME nvarchar(50) default '???'
 );
 
-delete AUDITORIUM_TYPE;
-insert into AUDITORIUM_TYPE   (AUDITORIUM_TYPE,   AUDITORIUM_TYPENAME )
-                       values  ('ЛК',   'Лекционная');
-insert into AUDITORIUM_TYPE   (AUDITORIUM_TYPE,   AUDITORIUM_TYPENAME )
-                       values  ('ЛБ-К',   'Компьютерный класс');
-insert into AUDITORIUM_TYPE   (AUDITORIUM_TYPE,   AUDITORIUM_TYPENAME )
-                       values  ('ЛК-К', 'Лекционная с уст. компьютерами');
-insert into AUDITORIUM_TYPE   (AUDITORIUM_TYPE,   AUDITORIUM_TYPENAME )
-                       values  ('ЛБ-X', 'Химическая лаборатория');
-insert into AUDITORIUM_TYPE   (AUDITORIUM_TYPE,   AUDITORIUM_TYPENAME )
-                       values  ('ЛБ-СК', 'Спец. компьютерный класс');
----------------------------------------------------------------------------------------------------------------------
--- DROP TABLE AUDITORIUM 
-create table AUDITORIUM 
-(
- AUDITORIUM           char(10) primary key,  -- код аудитории
- AUDITORIUM_NAME      varchar2(200),          -- аудитория 
- AUDITORIUM_CAPACITY  number(4),              -- вместимость
- AUDITORIUM_TYPE      char(10) not null      -- тип аудитории
-                      references AUDITORIUM_TYPE(AUDITORIUM_TYPE)  
+INSERT INTO FACULTY (FACULTY,   FACULTY_NAME )
+            VALUES	  ('РҐРўРёРў', 'РҐРёРјРёС‡РµСЃРєР°СЏ С‚РµС…РЅРѕР»РѕРіРёСЏ Рё С‚РµС…РЅРёРєР°'),
+					  ('Р›РҐР¤', 'Р›РµСЃРѕС…РѕР·СЏР№СЃС‚РІРµРЅРЅС‹Р№ С„Р°РєСѓР»СЊС‚РµС‚'),
+					  ('РР­Р¤', 'РРЅР¶РµРЅРµСЂРЅРѕ-СЌРєРѕРЅРѕРјРёС‡РµСЃРєРёР№ С„Р°РєСѓР»СЊС‚РµС‚'),
+					  ('РўРўР›Рџ', 'РўРµС…РЅРѕР»РѕРіРёСЏ Рё С‚РµС…РЅРёРєР° Р»РµСЃРЅРѕР№ РїСЂРѕРјС‹С€Р»РµРЅРЅРѕСЃС‚Рё'),
+					  ('РўРћР’', 'РўРµС…РЅРѕР»РѕРіРёСЏ РѕСЂРіР°РЅРёС‡РµСЃРєРёС… РІРµС‰РµСЃС‚РІ'),
+					  ('РРў', 'Р¤Р°РєСѓР»СЊС‚РµС‚ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… С‚РµС…РЅРѕР»РѕРіРёР№');  
+SELECT * FROM FACULTY
+
+
+CREATE TABLE PULPIT (
+  PULPIT nvarchar(20) constraint PULPIT_PK primary key,
+  PULPIT_NAME nvarchar(100),
+  FACULTY nvarchar(10) constraint PULPIT_FACULTY_FK foreign key references FACULTY (FACULTY)
 );
 
-delete  AUDITORIUM;
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('206-1',   '206-1', 'ЛБ-К', 15);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY)
-                       values  ('301-1',   '301-1', 'ЛБ-К', 15);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('236-1',   '236-1', 'ЛК',   60);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('313-1',   '313-1', 'ЛК',   60);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('324-1',   '324-1', 'ЛК',   50);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('413-1',   '413-1', 'ЛБ-К', 15);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('423-1',   '423-1', 'ЛБ-К', 90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('408-2',   '408-2', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('103-4',   '103-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('105-4',   '105-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('107-4',   '107-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('110-4',   '110-4', 'ЛК',  30);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('111-4',   '111-4', 'ЛК',  30);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                      values  ('114-4',   '114-4', 'ЛК-К',  90 );
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values ('132-4',   '132-4', 'ЛК',   90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values ('02Б-4',   '02Б-4', 'ЛК',   90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values ('229-4',   '229-4', 'ЛК',   90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('304-4',   '304-4','ЛБ-К', 90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('314-4',   '314-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('320-4',   '320-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                       values  ('429-4',   '429-4', 'ЛК',  90);
-insert into  AUDITORIUM   (AUDITORIUM,   AUDITORIUM_NAME, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY )
-                        values  ('?',   '???', 'ЛК',  90);
------------------------------------------------------------------------------------------------------------------------
+INSERT INTO PULPIT(PULPIT, PULPIT_NAME, FACULTY)
+values ('РРЎРёРў', 'РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… СЃРёСЃС‚РµРј Рё С‚РµС…РЅРѕР»РѕРіРёР№ ', 'РРў'),
+       ('Р›Р’', 'Р›РµСЃРѕРІРѕРґСЃС‚РІР°', 'Р›РҐР¤'),
+       ('Р›РЈ', 'Р›РµСЃРѕСѓСЃС‚СЂРѕР№СЃС‚РІР°', 'Р›РҐР¤'),
+       ('Р›Р—РёР”Р’', 'Р›РµСЃРѕР·Р°С‰РёС‚С‹ Рё РґСЂРµРІРµСЃРёРЅРѕРІРµРґРµРЅРёСЏ', 'Р›РҐР¤'),
+       ('Р›РљРёРџ', 'Р›РµСЃРЅС‹С… РєСѓР»СЊС‚СѓСЂ Рё РїРѕС‡РІРѕРІРµРґРµРЅРёСЏ', 'Р›РҐР¤'),
+       ('РўРёРџ', 'РўСѓСЂРёР·РјР° Рё РїСЂРёСЂРѕРґРѕРїРѕР»СЊР·РѕРІР°РЅРёСЏ', 'Р›РҐР¤'),
+       ('Р›РџРёРЎРџРЎ', 'Р›Р°РЅРґС€Р°С„С‚РЅРѕРіРѕ РїСЂРѕРµРєС‚РёСЂРѕРІР°РЅРёСЏ Рё СЃР°РґРѕРІРѕ-РїР°СЂРєРѕРІРѕРіРѕ СЃС‚СЂРѕРёС‚РµР»СЊСЃС‚РІР°', 'Р›РҐР¤'),
+       ('РўР›', 'РўСЂР°РЅСЃРїРѕСЂС‚Р° Р»РµСЃР°', 'РўРўР›Рџ'),
+       ('Р›РњРёР›Р—', 'Р›РµСЃРЅС‹С… РјР°С€РёРЅ Рё С‚РµС…РЅРѕР»РѕРіРёРё Р»РµСЃРѕР·Р°РіРѕС‚РѕРІРѕРє', 'РўРўР›Рџ'),
+       ('РўР”Рџ', 'РўРµС…РЅРѕР»РѕРіРёР№ РґРµСЂРµРІРѕРѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‰РёС… РїСЂРѕРёР·РІРѕРґСЃС‚РІ', 'РўРўР›Рџ'),
+       ('РўРёР”РР”', 'РўРµС…РЅРѕР»РѕРіРёРё Рё РґРёР·Р°Р№РЅР° РёР·РґРµР»РёР№ РёР· РґСЂРµРІРµСЃРёРЅС‹', 'РўРўР›Рџ'),
+       ('РћРҐ', 'РћСЂРіР°РЅРёС‡РµСЃРєРѕР№ С…РёРјРёРё', 'РўРћР’'),
+       ('РҐРџР”', 'РҐРёРјРёС‡РµСЃРєРѕР№ РїРµСЂРµСЂР°Р±РѕС‚РєРё РґСЂРµРІРµСЃРёРЅС‹', 'РўРћР’'),
+       ('РўРќР’РёРћРҐРў', 'РўРµС…РЅРѕР»РѕРіРёРё РЅРµРѕСЂРіР°РЅРёС‡РµСЃРєРёС… РІРµС‰РµСЃС‚РІ Рё РѕР±С‰РµР№ С…РёРјРёС‡РµСЃРєРѕР№ С‚РµС…РЅРѕР»РѕРіРёРё ', 'РҐРўРёРў'),
+       ('РџРёРђРҐРџ', 'РџСЂРѕС†РµСЃСЃРѕРІ Рё Р°РїРїР°СЂР°С‚РѕРІ С…РёРјРёС‡РµСЃРєРёС… РїСЂРѕРёР·РІРѕРґСЃС‚РІ', 'РҐРўРёРў'),
+       ('Р­РўРёРњ', 'Р­РєРѕРЅРѕРјРёС‡РµСЃРєРѕР№ С‚РµРѕСЂРёРё Рё РјР°СЂРєРµС‚РёРЅРіР°', 'РР­Р¤'),
+       ('РњРёР­Рџ', 'РњРµРЅРµРґР¶РјРµРЅС‚Р° Рё СЌРєРѕРЅРѕРјРёРєРё РїСЂРёСЂРѕРґРѕРїРѕР»СЊР·РѕРІР°РЅРёСЏ', 'РР­Р¤'),
+       ('РЎР‘РЈРђРёРђ', 'РЎС‚Р°С‚РёСЃС‚РёРєРё, Р±СѓС…РіР°Р»С‚РµСЂСЃРєРѕРіРѕ СѓС‡РµС‚Р°, Р°РЅР°Р»РёР·Р° Рё Р°СѓРґРёС‚Р°', 'РР­Р¤'); 
+SELECT * FROM PULPIT
+
+CREATE TABLE TEACHER (
+  TEACHER nvarchar(10) constraint TEACHER_PK primary key,
+  TEACHER_NAME nvarchar(100),
+  GENDER nvarchar(1) CHECK (GENDER IN ('Рј', 'Р¶')),
+  PULPIT nvarchar(20) constraint TEACHER_PULPIT_FK foreign key references PULPIT (PULPIT)
+);
+
+INSERT INTO TEACHER(TEACHER, TEACHER_NAME, GENDER, PULPIT)
+      values  ('РЎРњР›Р’', 'РЎРјРµР»РѕРІ Р’Р»Р°РґРёРјРёСЂ Р’Р»Р°РґРёСЃР»Р°РІРѕРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('РђРљРќР’Р§', 'РђРєСѓРЅРѕРІРёС‡ РЎС‚Р°РЅРёСЃР»Р°РІ РРІР°РЅРѕРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('РљР›РЎРќР’', 'РљРѕР»РµСЃРЅРёРєРѕРІ Р’РёС‚Р°Р»РёР№ Р›РµРѕРЅРёРґРѕРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('Р‘Р РљР’Р§', 'Р‘СЂР°РєРѕРІРёС‡ РђРЅРґСЂРµР№ РРіРѕСЂРµРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('Р”РўРљ', 'Р”СЏС‚РєРѕ РђР»РµРєСЃР°РЅРґСЂ РђСЂРєР°РґСЊРµРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('РЈР Р‘', 'РЈСЂР±Р°РЅРѕРІРёС‡ РџР°РІРµР» РџР°РІР»РѕРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('Р“Р Рќ', 'Р“СѓСЂРёРЅ РќРёРєРѕР»Р°Р№ РРІР°РЅРѕРІРёС‡', 'Рј', 'РРЎРёРў'),
+			  ('Р–Р›Рљ', 'Р–РёР»СЏРє РќР°РґРµР¶РґР° РђР»РµРєСЃР°РЅРґСЂРѕРІРЅР°', 'Р¶', 'РРЎРёРў'),
+			  ('РњР Р—', 'РњРѕСЂРѕР· Р•Р»РµРЅР° РЎС‚Р°РЅРёСЃР»Р°РІРѕРІРЅР°', 'Р¶', 'РРЎРёРў'),
+			  ('Р‘Р РќР’РЎРљ', 'Р‘Р°СЂР°РЅРѕРІСЃРєРёР№ РЎС‚Р°РЅРёСЃР»Р°РІ РРІР°РЅРѕРІРёС‡', 'Рј', 'Р­РўРёРњ'),
+			  ('РќР’Р Р’', 'РќРµРІРµСЂРѕРІ РђР»РµРєСЃР°РЅРґСЂ Р’Р°СЃРёР»СЊРµРІРёС‡', 'Рј', 'РњРёР­Рџ'),
+			  ('Р Р’РљР§', 'Р РѕРІРєР°С‡ РђРЅРґСЂРµР№ РРІР°РЅРѕРІРёС‡', 'Рј', 'Р›Р’'),
+			  ('Р”РњР”Рљ', 'Р”РµРјРёРґРєРѕ РњР°СЂРёРЅР° РќРёРєРѕР»Р°РµРІРЅР°', 'Р¶', 'Р›РџРёРЎРџРЎ'),
+			  ('Р‘Р Р“', 'Р‘СѓСЂРіР°РЅСЃРєР°СЏ РўР°С‚СЊСЏРЅР° РњРёРЅР°РµРІРЅР°', 'Р¶', 'Р›РџРёРЎРџРЎ'),
+			  ('Р Р–Рљ', 'Р РѕР¶РєРѕРІ Р›РµРѕРЅРёРґ РќРёРєРѕР»Р°РµРІРёС‡ ', 'Рј', 'Р›Р’'),
+			  ('Р—Р’Р“Р¦Р’', 'Р—РІСЏРіРёРЅС†РµРІ Р’СЏС‡РµСЃР»Р°РІ Р‘РѕСЂРёСЃРѕРІРёС‡', 'Рј', 'Р›Р—РёР”Р’'),
+			  ('Р‘Р—Р‘Р Р”Р’', 'Р‘РµР·Р±РѕСЂРѕРґРѕРІ Р’Р»Р°РґРёРјРёСЂ РЎС‚РµРїР°РЅРѕРІРёС‡', 'Рј', 'РћРҐ'),
+			  ('РќРЎРљР’Р¦', 'РќР°СЃРєРѕРІРµС† РњРёС…Р°РёР» РўСЂРѕС„РёРјРѕРІРёС‡', 'Рј', 'РўР›');
+SELECT * FROM TEACHER
+
+CREATE TABLE SUBJECT (
+  SUBJECT nvarchar(10) constraint SUBJECT_PK primary key,
+  SUBJECT_NAME nvarchar(100) unique,
+  PULPIT nvarchar(20) constraint SUBJECT_PULPIT_FK foreign key references PULPIT (PULPIT)
+);
+INSERT INTO SUBJECT(SUBJECT, SUBJECT_NAME, PULPIT)
+    values  ('РЎРЈР‘Р”', 'РЎРёСЃС‚РµРјС‹ СѓРїСЂР°РІР»РµРЅРёСЏ Р±Р°Р·Р°РјРё РґР°РЅРЅС‹С…', 'РРЎРёРў'),
+            ('Р‘Р”', 'Р‘Р°Р·С‹ РґР°РЅРЅС‹С…', 'РРЎРёРў'),
+            ('РРќР¤', 'РРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹Рµ С‚РµС…РЅРѕР»РѕРіРёРё', 'РРЎРёРў'),
+            ('РћРђРёРџ', 'РћСЃРЅРѕРІС‹ Р°Р»РіРѕСЂРёС‚РјРёР·Р°С†РёРё Рё РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёСЏ', 'РРЎРёРў'),
+            ('РџР—', 'РџСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ Р·РЅР°РЅРёР№ РІ РєРѕРјРїСЊСЋС‚РµСЂРЅС‹С… СЃРёСЃС‚РµРјР°С…', 'РРЎРёРў'),
+            ('РџРЎРџ', 'РџСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ СЃРµС‚РµРІС‹С… РїСЂРёР»РѕР¶РµРЅРёР№', 'РРЎРёРў'),
+            ('РњРЎРћР', 'РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ СЃРёСЃС‚РµРј РѕР±СЂР°Р±РѕС‚РєРё РёРЅС„РѕСЂРјР°С†РёРё', 'РРЎРёРў'),
+            ('РџРРЎ', 'РџСЂРѕРµРєС‚РёСЂРѕРІР°РЅРёРµ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅС‹С… СЃРёСЃС‚РµРј', 'РРЎРёРў'),
+            ('РљР“', 'РљРѕРјРїСЊСЋС‚РµСЂРЅР°СЏ РіРµРѕРјРµС‚СЂРёСЏ ', 'РРЎРёРў'),
+            ('РљРњРЎ', 'РљРѕРјРїСЊСЋС‚РµСЂРЅС‹Рµ РјСѓР»СЊС‚РёРјРµРґРёР№РЅС‹Рµ СЃРёСЃС‚РµРјС‹', 'РРЎРёРў'),
+            ('Р”Рњ', 'Р”РёСЃРєСЂРµС‚РЅР°СЏ РјР°С‚РµРјР°С‚РёРєР°', 'РРЎРёРў'),
+            ('РњРџ', 'РњР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРµ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ', 'РРЎРёРў'),
+            ('Р›Р­Р’Рњ', 'Р›РѕРіРёС‡РµСЃРєРёРµ РѕСЃРЅРѕРІС‹ Р­Р’Рњ', 'РРЎРёРў'),
+            ('РћРћРџ', 'РћР±СЉРµРєС‚РЅРѕ-РѕСЂРёРµРЅС‚РёСЂРѕРІР°РЅРЅРѕРµ РїСЂРѕРіСЂР°РјРјРёСЂРѕРІР°РЅРёРµ', 'РРЎРёРў'),
+            ('Р­Рџ', 'Р­РєРѕРЅРѕРјРёРєР° РїСЂРёСЂРѕРґРѕРїРѕР»СЊР·РѕРІР°РЅРёСЏ', 'РњРёР­Рџ'),
+            ('Р­Рў', 'Р­РєРѕРЅРѕРјРёС‡РµСЃРєР°СЏ С‚РµРѕСЂРёСЏ', 'Р­РўРёРњ'),
+            ('Р‘Р›Р—РёРџСЃOO', 'Р‘РёРѕР»РѕРіРёСЏ Р»РµСЃРЅС‹С… Р·РІРµСЂРµР№ Рё РїС‚РёС† СЃ РѕСЃРЅ. РѕС…РѕС‚РѕРІ.', 'Р›Р’'),
+            ('РћРЎРџРёР›РџРҐ', 'РћСЃРЅРѕРІС‹ СЃР°РґРѕРІРѕ-РїР°СЂРєРѕРІРѕРіРѕ Рё Р»РµСЃРѕРїР°СЂРєРѕРІРѕРіРѕ С…РѕР·СЏР№-СЃС‚РІР°', 'Р›РџРёРЎРџРЎ'),
+            ('РР“', 'РРЅР¶РµРЅРµСЂРЅР°СЏ РіРµРѕРґРµР·РёСЏ ', 'Р›Р’'),
+            ('Р›Р’', 'Р›РµСЃРѕРІРѕРґСЃС‚РІРѕ', 'Р›Р—РёР”Р’'),
+            ('РћРҐ', 'РћСЂРіР°РЅРёС‡РµСЃРєР°СЏ С…РёРјРёСЏ', 'РћРҐ'),
+            ('РўР Р', 'РўРµС…РЅРѕР»РѕРіРёСЏ СЂРµР·РёРЅРѕРІС‹С… РёР·РґРµР»РёР№', 'Р›Р—РёР”Р’'),
+            ('Р’РўР›', 'Р’РѕРґРЅС‹Р№ С‚СЂР°РЅСЃРїРѕСЂС‚ Р»РµСЃР°', 'РўР›'),
+            ('РўРёРћР›', 'РўРµС…РЅРѕР»РѕРіРёСЏ Рё РѕР±РѕСЂСѓРґРѕРІР°РЅРёРµ Р»РµСЃРѕР·Р°РіРѕС‚РѕРІРѕРє', 'Р›Р—РёР”Р’'),
+            ('РўРћРџР', 'РўРµС…РЅРѕР»РѕРіРёСЏ РѕР±РѕРіР°С‰РµРЅРёСЏ РїРѕР»РµР·РЅС‹С… РёСЃРєРѕРїР°РµРјС‹С… ', 'РЎР‘РЈРђРёРђ'),
+            ('РџР­РҐ', 'РџСЂРёРєР»Р°РґРЅР°СЏ СЌР»РµРєС‚СЂРѕС…РёРјРёСЏ', 'РўРќР’РёРћРҐРў');
+SELECT * FROM SUBJECT
+
+CREATE TABLE AUDITORIUM_TYPE (
+  AUDITORIUM_TYPE nvarchar(10) constraint AUDITORIUM_TYPE_PK primary key,
+  AUDITORIUM_TYPENAME nvarchar(30)
+);
+INSERT INTO AUDITORIUM_TYPE(AUDITORIUM_TYPE, AUDITORIUM_TYPENAME)
+values ('LK', 'Р›РµРєС†РёРѕРЅРЅР°СЏ'),
+       ('LB-K', 'РљРѕРјРїСЊСЋС‚РµСЂРЅС‹Р№ РєР»Р°СЃСЃ'),
+       ('LK-K', 'Р›РµРєС†РёРѕРЅРЅР°СЏ СЃ СѓСЃС‚. РїСЂРѕРµРєС‚РѕСЂРѕРј'),
+       ('LB-H', 'РҐРёРјРёС‡РµСЃРєР°СЏ Р»Р°Р±РѕСЂР°С‚РѕСЂРёСЏ'),
+       ('LB-CK', 'РЎРїРµС†. РєРѕРјРїСЊСЋС‚РµСЂРЅС‹Р№ РєР»Р°СЃСЃ')
+SELECT * FROM AUDITORIUM_TYPE
+
+CREATE TABLE AUDITORIUM (
+  AUDITORIUM nvarchar(20) constraint AUDITORIUM_PK primary key,
+  AUDITORIUM_TYPE nvarchar(10) constraint AUDITORIUM_AUDITORIUM_TYPE_FK foreign key references AUDITORIUM_TYPE(AUDITORIUM_TYPE),
+  AUDITORIUM_CAPACITY integer constraint AUDITORIUM_CAPACITY_CHECK default 1 check (
+	AUDITORIUM_CAPACITY BETWEEN 1 AND 300
+  ) --РІРјРµСЃС‚РёРјРѕСЃС‚СЊ AUDITORIUM_NAME varcharпј€50пј‰)
+);
+
+INSERT INTO AUDITORIUM(AUDITORIUM, AUDITORIUM_TYPE, AUDITORIUM_CAPACITY)
+values
+  ('206-1', 'LB-K',15),
+  ('301-1', 'LB-K', 15),
+  ('236-1', 'LK', 60),
+  ('313-1', 'LK-K', 60),
+  ('324-1', 'LK-K', 50),
+  ('413-1', 'LB-K', 15),
+  ('423-1', 'LB-K', 90),
+  ('408-2', 'LK', 90);
+SELECT * FROM AUDITORIUM
 
 
 
-
-
-
-
- 
