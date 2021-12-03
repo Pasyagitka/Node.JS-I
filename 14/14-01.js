@@ -158,42 +158,48 @@ let UpdateAuditoriumTypes = (pool, type, typename, _cb) => {
     })
 };
 
+
 let DeleteFaculties = (pool, faculty, _cb) => {
+    console.log('DeleteFaculties');
     const cb = _cb?_cb:(err, result)=> {console.log('default cb')};
     let ps = new sql.PreparedStatement(pool);
-    ps.input('faculty', sql.VarChar(10));
-    ps.prepare('delete from faculty where faculty = @faculty', err => {
+    ps.input('faculty', sql.NVarChar(10));
+    ps.prepare(`update pulpit set faculty = null where faculty = @faculty; 
+                delete from faculty where faculty = @faculty`, err => {
         if (err) cb(err, null);
-        else    ps.execute({faculty: faculty}, (err, result) => {
+        else ps.execute({faculty: faculty}, (err, result) => {
                     if (err) cb(err, null);
                     else {
-                        result.rowsAffected > 0 ? 
-                        cb(null, result, JSON.stringify({faculty: faculty, rowsAffected: result.rowsAffected[0]}))
+                        console.log(result);
+                        result.rowsAffected[1] > 0 ? 
+                        cb(null, result, JSON.stringify({faculty: faculty,'Pulpits removed': result.rowsAffected[0], 'Faculties deleted': result.rowsAffected[1]}))
                         :
                         cb(null, result, JSON.stringify({faculty: 'none', message: 'no faculty deleted'}));
                     }
-                });
+            });
     })
 };
+
 
 let DeletePulpits = (pool, pulpit, _cb) => {
     const cb = _cb?_cb:(err, result)=> {console.log('default cb')};
     let ps = new sql.PreparedStatement(pool);
     ps.input('pulpit', sql.NVarChar(20));
-    ps.prepare('delete from pulpit where pulpit = @pulpit', err => {
+    ps.prepare(`update subject set pulpit = null where pulpit = @pulpit;
+                update teacher set pulpit = null where pulpit = @pulpit; 
+                delete from pulpit where pulpit = @pulpit`, err => {
         if (err) cb(err, null);
         else ps.execute({pulpit: pulpit}, (err, result) => {
             if (err) cb(err, null);
             else {
-                result.rowsAffected > 0 ? 
-                cb(null, result, JSON.stringify({pulpit: pulpit, rowsAffected: result.rowsAffected[0]}))
+                result.rowsAffected[2] > 0 ? 
+                cb(null, result, JSON.stringify({pulpit: pulpit, 'subjects removed': result.rowsAffected[0], 'teachers removed': result.rowsAffected[1], 'pulpits deleted': result.rowsAffected[2]}))
                 :
                 cb(null, result, JSON.stringify({pulpit: 'none', message: 'no pulpit deleted'}));
             }
         });
     })
 };
-
 
 let DeleteSubjects = (pool, subject, _cb) => {
     const cb = _cb?_cb:(err, result)=> {console.log('default cb')};
@@ -235,13 +241,14 @@ let DeleteAuditoriumTypes = (pool, type, _cb) => {
     const cb = _cb?_cb:(err, result)=> {console.log('default cb')};
     let ps = new sql.PreparedStatement(pool);
     ps.input('type', sql.NVarChar(10));
-    ps.prepare('delete from AUDITORIUM_TYPE where AUDITORIUM_TYPE = @type', err => {
+    ps.prepare(`update auditorium set AUDITORIUM_TYPE = null where AUDITORIUM_TYPE = @type; 
+                delete from AUDITORIUM_TYPE where AUDITORIUM_TYPE = @type`, err => {
         if (err) cb(err, null);
         else ps.execute({type: type}, (err, result) => {
                     if (err) cb(err, null);
                     else{
-                        result.rowsAffected > 0 ? 
-                        cb(null, result, JSON.stringify({type: type, rowsAffected: result.rowsAffected[0]}))
+                        result.rowsAffected[1] > 0 ? 
+                        cb(null, result, JSON.stringify({type: type, 'auditoriums removed': result.rowsAffected[0], 'types deleted': result.rowsAffected[1]}))
                         :
                         cb(null, result, JSON.stringify({type: 'none', message: 'no type deleted'}));
                     } 
@@ -251,25 +258,25 @@ let DeleteAuditoriumTypes = (pool, type, _cb) => {
 
 http.createServer(function(request, response) {
 	
-    let requestUrl = url.parse(request.url, true).pathname;
+    let requestUrl = decodeURI(url.parse(request.url, true).pathname);
     
     let SelectRequestCallback = (err, result) => {
         if (err) {
-            response.writeHead(400, {'Content-Type': 'application/json;'});
+            response.writeHead(400, {'Content-Type': 'application/json;charset=utf-8'});
             response.end(JSON.stringify({error_code: err.code, message: err.message}));
         }
         else {
-            response.writeHead(200, {'Content-Type': 'application/json;'});
+            response.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
             response.end(JSON.stringify(result.recordset));
         }
     }
     let ReturnJSONCallback = (err, result, data) => {
         if (err) {
-            response.writeHead(400, {'Content-Type': 'application/json;'});
+            response.writeHead(400, {'Content-Type': 'application/json;charset=utf-8'});
             response.end(JSON.stringify({error_code: err.code, message: err.message}));
         }
         else {
-            response.writeHead(200, {'Content-Type': 'application/json;'});
+            response.writeHead(200, {'Content-Type': 'application/json;charset=utf-8'});
             response.end(data);
         }
     }
@@ -279,19 +286,19 @@ http.createServer(function(request, response) {
         response.end(fs.readFileSync(htmlFilename));
     }
     else if (request.method == 'GET' && requestUrl == '/api/faculties'){
-        poolConnect.then((pool) => { pool.request().query('select faculty_name from faculty', SelectRequestCallback)});
+        poolConnect.then((pool) => { pool.request().query('select * from faculty', SelectRequestCallback)});
     }
     else if (request.method == 'GET' && requestUrl == '/api/pulpits'){
-        poolConnect.then((pool) => { pool.request().query('select pulpit_name from pulpit', SelectRequestCallback)});
+        poolConnect.then((pool) => { pool.request().query('select pulpit, pulpit_name, faculty from pulpit', SelectRequestCallback)});
     }
     else if (request.method == 'GET' && requestUrl == '/api/subjects'){
-        poolConnect.then((pool) => { pool.request().query('select subject_name from subject', SelectRequestCallback)});
+        poolConnect.then((pool) => { pool.request().query('select * from subject', SelectRequestCallback)});
     }
     else if (request.method == 'GET' && requestUrl == '/api/auditoriumtypes'){
-        poolConnect.then((pool) => { pool.request().query('select auditorium_typename from auditorium_type', SelectRequestCallback)});
+        poolConnect.then((pool) => { pool.request().query('select * from auditorium_type', SelectRequestCallback)});
     }
     else if (request.method == 'GET' && requestUrl == '/api/auditoriums'){
-        poolConnect.then((pool) => { pool.request().query('select auditorium from auditorium', SelectRequestCallback)});
+        poolConnect.then((pool) => { pool.request().query('select * from auditorium', SelectRequestCallback)});
     }
 
 
@@ -329,8 +336,7 @@ http.createServer(function(request, response) {
 
     else if (request.method == 'PUT' && requestUrl == '/api/faculties'){
         request.on('data',  data => {
-            let newFaculty = JSON.parse(data); 
-            console.log(newFaculty);
+            let newFaculty = JSON.parse(data);
             poolConnect.then((pool) => {UpdateFaculty(pool, newFaculty.faculty, newFaculty.faculty_name, ReturnJSONCallback)})
         })
     }
@@ -360,23 +366,23 @@ http.createServer(function(request, response) {
     }
 
 
-    else if (request.method == 'DELETE' && (/\/api\/faculties\/\w+/).test(requestUrl)){
+    else if (request.method == 'DELETE' && (/\/api\/faculties\/[А-Яа-яA-Za-z]/).test(requestUrl)){
         let id = url.parse(requestUrl, true).pathname.split('/')[3];
         poolConnect.then((pool) => {DeleteFaculties(pool, id, ReturnJSONCallback)})
     }
-    else if (request.method == 'DELETE' && (/\/api\/pulpits\/\w+/).test(requestUrl)){
+    else if (request.method == 'DELETE' && (/\/api\/pulpits\/[А-Яа-яA-Za-z]/).test(requestUrl)){
         let id = url.parse(requestUrl, true).pathname.split('/')[3];
         poolConnect.then((pool) => {DeletePulpits(pool, id, ReturnJSONCallback)})
     }
-    else if (request.method == 'DELETE' && (/\/api\/subjects\/\w+/).test(requestUrl)){
+    else if (request.method == 'DELETE' && (/\/api\/subjects\/[А-Яа-яA-Za-z]/).test(requestUrl)){
         let id = url.parse(requestUrl, true).pathname.split('/')[3];
         poolConnect.then((pool) => {DeleteSubjects(pool, id, ReturnJSONCallback)})
     }
-    else if (request.method == 'DELETE' && (/\/api\/auditoriumtypes\/\w+/).test(requestUrl)){
+    else if (request.method == 'DELETE' && (/\/api\/auditoriumtypes\/[А-Яа-яA-Za-z]/).test(requestUrl)){
         let id = url.parse(requestUrl, true).pathname.split('/')[3];
         poolConnect.then((pool) => {DeleteAuditoriumTypes(pool, id, ReturnJSONCallback)})
     }
-    else if (request.method == 'DELETE' && (/\/api\/auditoriums\/\w+/).test(requestUrl)){
+    else if (request.method == 'DELETE' && (/\/api\/auditoriums\/[А-Яа-яA-Za-z]/).test(requestUrl)){
         let id = url.parse(requestUrl, true).pathname.split('/')[3];
         poolConnect.then((pool) => {DeleteAuditoriums(pool, id, ReturnJSONCallback)})
     }

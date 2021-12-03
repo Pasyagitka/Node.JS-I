@@ -75,7 +75,10 @@
             .then(pdata => {
                 let get = document.getElementById("result");
                 get.innerHTML = '';
-                pdata.forEach(element => {get.innerHTML += (element.pulpit_name + '<br/>');  });
+                pdata.forEach(element => {
+                    console.log(element);
+                    get.innerHTML += (element.pulpit + '. ' + element.pulpit_name + '. ' + element.faculty + '<br/>');  
+                });
             });
         }
         function Post() {
@@ -100,7 +103,7 @@
             .then(response => { return response.json(); })
             .then(pdata => { document.getElementById("result").innerHTML = JSON.stringify(pdata); });
         }
-        function Delete() {//вернуть удаленные
+        function Delete() {
             let Id = document.getElementById("dId");
             fetch(`http://localhost:3000/api/pulpits/${Id.value}`, {method: 'DELETE', headers: {'Content-Type': 'application/json'}})
             .then(response => {  return response.json(); })
