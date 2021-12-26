@@ -1,0 +1,94 @@
+schema {
+    query: query
+    mutation: mutation
+}
+
+type faculty {
+    faculty: String!
+    faculty_name: String!
+}
+
+type pulpit {
+    pulpit: String!
+    pulpit_name: String!
+    faculty: String!
+}
+
+type teacher {
+    teacher: String!
+    teacher_name: String!
+    pulpit: String
+}
+
+type subject {
+    subject: String!
+    subject_name: String!
+    pulpit: String
+}
+
+type teachersbyfaculty {
+    faculty: String
+    teachers:[teacher]
+}
+
+type subjectsbyfaculty {
+    faculty: String!
+    pulpits: [pulpitforsubjectsbyfaculty]
+}
+type pulpitforsubjectsbyfaculty {
+    pulpit: String!
+    pulpit_name: String!
+    subjects: [subject!]
+}
+
+type delete {
+    result: String
+}
+
+
+input inFaculty
+{
+    faculty: String!
+    facultyname: String!
+}
+input inPulpit
+{
+    pulpit: String!
+    pulpitname: String!
+    faculty: String!
+}
+input inSubject
+{
+    subject: String!
+    subjectname: String!
+    pulpit: String!
+}
+input inTeacher
+{
+    teacher: String!
+    teachername: String!
+    pulpit: String!
+}
+
+
+type query {
+    getFaculties(faculty: String): [faculty],
+    getPulpits(pulpit: String): [pulpit],
+    getTeachers(teacher: String): [teacher],
+    getSubjects(subject: String): [subject],
+    getTeachersByFaculty(faculty: String!): [teachersbyfaculty],
+    getSubjectsByFaculties(faculty: String!): [subjectsbyfaculty]
+    getSubjectsByPulpit(pulpit: String!): [pulpitforsubjectsbyfaculty]
+}
+
+type mutation {
+    setFaculty(faculty: inFaculty!): faculty,
+    setPulpit(pulpit: inPulpit!): pulpit,
+    setTeacher(teacher: inTeacher!): teacher,
+    setSubject(subject: inSubject!): subject,
+
+    delFaculty(faculty: String!): delete,
+    delPulpit(pulpit: String!): delete,
+    delTeacher(teacher: String!): delete,
+    delSubject(subject: String!): delete
+}
