@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "65fbe246-4b36-4fef-8b3a-50eaa500f12d",
+		"name": "Lab16",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mutations",
+			"item": [
+				{
+					"name": "setFaculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation setFaculty ($faculty: inFaculty!) { setFaculty (faculty: $faculty) { faculty faculty_name }}\",\r\n    \"variables\": { \"faculty\": { \"faculty\": \"ll111\", \"facultyname\": \"Факультет\" } }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setPulpit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation setPulpit ($pulpit: inPulpit!) { setPulpit (pulpit: $pulpit) {  pulpit pulpit_name faculty } }\",\r\n    \"variables\": { \r\n        \"pulpit\": \r\n        { \r\n            \"pulpit\": \"ИИИ\", \r\n            \"pulpitname\": \"Новая\", \r\n            \"faculty\": \"ИТ\" \r\n        } \r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setTeacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation setTeacher ($teacher: inTeacher!) { setTeacher (teacher: $teacher) { teacher teacher_name pulpit } }\",\r\n    \"variables\":\r\n    {\r\n        \"teacher\": {\r\n            \"teacher\": \"ККз\",\r\n            \"teachername\": \"ккз\",\r\n            \"pulpit\": \"НОВ\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setSubject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation setSubject ($subject: inSubject!) {  setSubject (subject: $subject) { subject  subject_name pulpit } }\",\r\n    \"variables\":\r\n    {\r\n        \"subject\": {\r\n            \"subject\": \"ггп\",\r\n            \"subjectname\": \"зззз\",\r\n            \"pulpit\": \"ИИИ\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delFaculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation delFaculty ($faculty: String!) { delFaculty (faculty: $faculty) {  result } }\",\r\n    \"variables\":\r\n    {\r\n        \"faculty\": \"aaa\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delPulpit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation delPulpit ($pulpit: String!) { delPulpit (pulpit: $pulpit) { result }}\",\r\n    \"variables\":\r\n   {\r\n    \"pulpit\": \"ИИИ\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delTeacher",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation delTeacher ($teacher: String!) {delTeacher (teacher: $teacher) {  result }}\",\r\n    \"variables\":\r\n    {\r\n        \"teacher\": \"Ааа\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delSubject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"mutation\":  \"mutation delSubject ($subject: String!) { delSubject (subject: $subject) { result }}\",\r\n    \"variables\":\r\n    {\r\n    \"subject\": \"гг\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "queries",
+			"item": [
+				{
+					"name": "getFaculties",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getFaculties ($faculty: String) {\n    getFaculties (faculty: $faculty) {\n        faculty\n        faculty_name\n    }\n}",
+								"variables": "{\n  \"faculty\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPulpits",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getPulpits ($pulpit: String) {\n    getPulpits (pulpit: $pulpit) {\n        pulpit\n        pulpit_name\n        faculty\n    }\n}",
+								"variables": "{\n  \"pulpit\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTeachers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getTeachers ($teacher: String) {\n    getTeachers (teacher: $teacher) {\n        teacher\n        teacher_name\n        pulpit\n    }\n}",
+								"variables": "{\n  \"teacher\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubjects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getSubjects ($subject: String) {\n    getSubjects (subject: $subject) {\n        subject\n        subject_name\n        pulpit\n    }\n}",
+								"variables": "{\n  \"subject\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTeachersbyfaculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getTeachersByFaculty ($faculty: String!) {\n    getTeachersByFaculty (faculty: $faculty) {\n        faculty\n        teachers {\n            teacher\n            teacher_name\n            pulpit\n        }\n    }\n}",
+								"variables": "{\n  \"faculty\": \"ЛХФ\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSubjectsByFaculty",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getSubjectsByFaculties ($faculty: String!) {\n    getSubjectsByFaculties (faculty: $faculty) {\n        faculty\n        pulpits {\n            pulpit\n            pulpit_name\n            subjects {\n                subject\n                subject_name\n                pulpit\n            }\n        }\n    }\n}",
+								"variables": "{\n  \"faculty\": \"ЛХФ\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3000/"
+		}
+	]
+}

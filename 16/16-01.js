@@ -17,7 +17,7 @@ http.createServer(function(request, response) {
             try {
                 let obj = JSON.parse(result);
                 if (obj.mutation) {
-                    graphql(schema, obj.mutation, resolver, context, obj.variables)
+                    graphql(schema, obj.mutation, resolver.Mutation, context, obj.variables)
                     .then((records) => {
                             response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
                             response.end(JSON.stringify(records))
@@ -29,7 +29,7 @@ http.createServer(function(request, response) {
                     );
                 }
                 if (obj.query) {
-                    graphql(schema, obj.query, resolver, context, obj.variables)
+                    graphql(schema, obj.query, resolver.Query, context, obj.variables)
                     .then((records) => {
                         response.writeHead(200, {'Content-Type': 'application/json; charset=utf-8'});
                         response.end(JSON.stringify(records))

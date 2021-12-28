@@ -174,29 +174,32 @@ function DB (cb) {
 exports.DB = (cb) => { return new DB(cb) };
 
 exports.resolver = {
-    getFaculties:(args, context) => (args.faculty) ? context.getFaculty(args.faculty) : context.getFaculties(),
-    getTeachers: (args, context) => (args.teacher) ? context.getTeacher(args.teacher) : context.getTeachers(),
-    getPulpits:  (args, context) => (args.pulpit)  ? context.getPulpit(args.pulpit)   : context.getPulpits(),
-    getSubjects: (args, context) => (args.subject) ? context.getSubject(args.subject) : context.getSubjects(),
+    Query: {
+        getFaculties:(args, context) => (args.faculty) ? context.getFaculty(args.faculty) : context.getFaculties(),
+        getTeachers: (args, context) => (args.teacher) ? context.getTeacher(args.teacher) : context.getTeachers(),
+        getPulpits:  (args, context) => (args.pulpit)  ? context.getPulpit(args.pulpit)   : context.getPulpits(),
+        getSubjects: (args, context) => (args.subject) ? context.getSubject(args.subject) : context.getSubjects(),
 
-    getTeachersByFaculty: (args, context) => context.getTeachersByFaculty(args.faculty),
-    getSubjectsByFaculties: async (args, context) => {
-        let ppts = await context.getPulpitsForFaculty(args.faculty);
-        let rc = [{faculty: args.faculty, pulpits: []}];
-        for (var el of ppts) {
-            let p = await context.getSubjectsByPulpit(el.pulpit);
-            if (p.length !==0) rc[0].pulpits.push(p[0]);
+        getTeachersByFaculty: (args, context) => context.getTeachersByFaculty(args.faculty),
+        getSubjectsByFaculties: async (args, context) => {
+            let ppts = await context.getPulpitsForFaculty(args.faculty);
+            let rc = [{faculty: args.faculty, pulpits: []}];
+            for (var el of ppts) {
+                let p = await context.getSubjectsByPulpit(el.pulpit);
+                if (p.length !==0) rc[0].pulpits.push(p[0]);
+            }
+            return rc;
         }
-        return rc;
     },
+    Mutation: {
+        setFaculty: async (args, context) => (await context.updateFaculty(args.faculty)) ?? (await context.insertFaculty(args.faculty)),
+        setPulpit:  async (args, context) => (await context.updatePulpit(args.pulpit)) ?? (await context.insertPulpit(args.pulpit)),
+        setSubject: async (args, context) => (await context.updateSubject(args.subject)) ?? (await context.insertSubject(args.subject)),
+        setTeacher: async (args, context) => (await context.updateTeacher(args.teacher)) ?? (await context.insertTeacher(args.teacher)),
 
-    setFaculty: async (args, context) => (await context.updateFaculty(args.faculty)) ?? (await context.insertFaculty(args.faculty)),
-    setPulpit:  async (args, context) => (await context.updatePulpit(args.pulpit)) ?? (await context.insertPulpit(args.pulpit)),
-    setSubject: async (args, context) => (await context.updateSubject(args.subject)) ?? (await context.insertSubject(args.subject)),
-    setTeacher: async (args, context) => (await context.updateTeacher(args.teacher)) ?? (await context.insertTeacher(args.teacher)),
-
-    delFaculty: (args, context) => context.delFaculty(args.faculty),
-    delPulpit:  (args, context) => context.delPulpit(args.pulpit),
-    delSubject: (args, context) => context.delSubject(args.subject),
-    delTeacher: (args, context) => context.delTeacher(args.teacher)
+        delFaculty: (args, context) => context.delFaculty(args.faculty),
+        delPulpit:  (args, context) => context.delPulpit(args.pulpit),
+        delSubject: (args, context) => context.delSubject(args.subject),
+        delTeacher: (args, context) => context.delTeacher(args.teacher)
+    }
 };
